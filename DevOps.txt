@@ -1,0 +1,50 @@
+I will attempt to implement the "Component Class" interface.
+Here's what chat gpt has to say:
+
+For a player class in an arcade game like "Joust," the best design pattern to consider is the Component pattern. 
+The Component pattern allows for flexible composition of behaviors and characteristics, which is beneficial for a 
+player character that may have various abilities and interactions in the game. Here's how you can apply the Component pattern to the player class:
+
+1. Base Player Class:
+   - Create a base player class that serves as the container for different components.
+   - The base player class should provide basic properties and methods common to all player characters, 
+   such as position, velocity, and collision detection.
+
+2. Component Classes:
+   - Identify distinct behaviors or characteristics of the player character and create separate component classes for each.
+   - For example, you may have components for movement, input handling, collision detection, animation, and scoring.
+   - Each component class encapsulates specific functionality related to its behavior.
+
+3. Composition:
+   - Add instances of the component classes as attributes of the player class.
+   - The player class delegates the relevant operations to the appropriate component instances.
+   - For example, the player class might delegate movement handling to the movement component and input handling to the input component.
+
+4. Interface:
+   - Define a common interface that the components must adhere to, ensuring consistency and compatibility between different components.
+   - The interface should include methods that the player class will use to interact with the components.
+
+5. Initialization:
+   - During player class initialization, instantiate the required component classes and attach them to the player instance.
+   - Configure the components with any necessary parameters or initial settings.
+
+6. Modularity and Extensibility:
+   - With the Component pattern, you can easily add or remove components to modify the player's behavior.
+   - You can also create new component classes to introduce new features without modifying the base player class.
+
+Using the Component pattern, you can compose the player character's behavior from various components,
+ each responsible for a specific aspect of the player's functionality. This approach promotes modularity, 
+ reusability, and flexibility in designing and extending the player class for your arcade game.
+
+
+
+ Current plan:
+
+   Player kind of collides with objects, It's still a little buggy. I belive that the left and right collisions are 
+   registering as top and bottom somehow still.
+
+
+   AI movement:
+      Create different classes of ai. Let's first make a class of right fliers, that like to fly right. 
+      I was thinking of adding some sort of distribution of movement based off a curve of some sort. 
+      Like they all tend to do this, but not always. 
