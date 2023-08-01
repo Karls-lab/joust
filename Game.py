@@ -1,12 +1,7 @@
 """
 Simple Jouse like game 
 Created By Karl Poulson
-Version: Alpha 1.0
-
-Inspiration from:
-http://programarcadegames.com/
-
-Name: Lance Champions
+Version: Alpha 1.5
 """
  
 import pygame
