@@ -20,30 +20,44 @@ class behaviorComponent:
         print(f"Initial behavior: {choice}")
         return choice
 
-    def update(self, enemy):
+    def update(self, enemy, player):
         # do gravity and wind resistance
-        enemy.movement.update(enemy, 0, .02)
-        if enemy.movement.x_velocity > 0:
-            enemy.movement.x_velocity -= .01
+        move = .5
 
-
-        random_choice = random.randint(1, 5)
+        random_choice = random.randint(1, 10)
         if random_choice == 1:
-            enemy.movement.update(enemy, .5, -.01)
+            enemy.movement.update_velocity(enemy, move, -.01)
         elif random_choice == 2:
-            enemy.movement.update(enemy, -.5, -.01)
+            enemy.movement.update_velocity(enemy, -move, -.01)
         elif random_choice == 3:
-            enemy.movement.update(enemy, 0, -.5)
+            enemy.movement.update_velocity(enemy, 0, -move)
         elif random_choice == 4:
-            enemy.movement.update(enemy, 0, .5)
+            enemy.movement.update_velocity(enemy, 0, move)
         # Else, if a roll is 5 enemies behavior
-        else:
+        elif random_choice == 5:
             if self.behavior == "Rightflyer":
-                enemy.movement.update(enemy, .3, -.01)
+                enemy.movement.update_velocity(enemy, move, -.01)
             elif self.behavior == "Leftflyer":
-                enemy.movement.update(enemy, -.3, -.01)
+                enemy.movement.update_velocity(enemy, -move, -.01)
             elif self.behavior == "Upflyer":
-                enemy.movement.update(enemy, 0, -.3)
+                enemy.movement.update_velocity(enemy, 0, -move)
             elif self.behavior == "Downflyer":
-                enemy.movement.update(enemy, 0, .3)
+                enemy.movement.update_velocity(enemy, 0, move)
+        elif 6 >= random_choice <= 8:
+            if enemy.movement.x_velocity > 0:
+                enemy.movement.update_velocity(enemy, -move, 0)
+            elif enemy.movement.y_velocity > 0:
+                enemy.movement.update_velocity(enemy, 0, -move)
+        elif random_choice == 9:
+            enemy.movement.update_velocity(enemy, 0, 0)
+        # Move to player's position
+        else:
+            if player.rect.x < enemy.rect.x:
+                enemy.movement.update_velocity(enemy, -move, 0)
+            elif player.rect.x > enemy.rect.x:
+                enemy.movement.update_velocity(enemy, move, 0)
+            elif player.rect.y < enemy.rect.y:
+                enemy.movement.update_velocity(enemy, 0, -move)
+            elif player.rect.y > enemy.rect.y:
+                enemy.movement.update_velocity(enemy, 0, move)
 

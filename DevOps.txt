@@ -37,14 +37,25 @@ Using the Component pattern, you can compose the player character's behavior fro
  reusability, and flexibility in designing and extending the player class for your arcade game.
 
 
-
- Current plan:
-
-   Player kind of collides with objects, It's still a little buggy. I belive that the left and right collisions are 
-   registering as top and bottom somehow still.
+*** Use match input for user input! :)
 
 
-   AI movement:
-      Create different classes of ai. Let's first make a class of right fliers, that like to fly right. 
-      I was thinking of adding some sort of distribution of movement based off a curve of some sort. 
-      Like they all tend to do this, but not always. 
+Current DevOps:
+
+Enemies: 
+   Ai is okay... But could use some improvement. usable still. 
+   Enemies should be a different color. Override somehow? 
+
+Collision:
+   Some enemies go right through blocks, specifically the bottom up. 
+   Maybe they are moving too fast for the collision to register? I might 
+   have to refactor my collision teqniques.
+
+Main Menu:
+   I should add some sort of main menue to the game 
+
+Assets:
+   I could download assets from the github and use them for my game.
+
+Levels:
+   Add more levels, increase number of enemies for each level 
