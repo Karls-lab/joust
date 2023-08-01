@@ -1,5 +1,5 @@
 """
-Simple Jouse like game 
+Lance Champions
 Created By Karl Poulson
 Version: Alpha 1.5
 """
