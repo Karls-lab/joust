@@ -1,7 +1,7 @@
 """
 Lance Champions
 Created By Karl Poulson
-Version: Alpha 1.5
+Version: Alpha 2.0
 """
  
 import pygame
