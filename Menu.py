@@ -6,27 +6,27 @@ class Menu():
         self.selection = None
         self.WHITE = (255, 255, 255)
 
+    
+    def draw_text_to_center(self, text, font, color):
+        self.screen.fill((0, 0, 0))
+        text_surface = font.render(text, True, color)
+        text_rect = text_surface.get_rect()
+        text_rect.center = (self.screen.get_width()/2, self.screen.get_height()/2)
+        self.screen.blit(text_surface, text_rect)
+
+
     def draw_menu(self):
-        self.screen.fill((0, 0, 0))
         font = pygame.font.SysFont('arial', 40)
-        start_button = font.render("Press (Space) to Start", True, self.WHITE)
-        self.screen.blit(start_button, (self.screen.get_width()/2 - start_button.get_width()/2, 
-                                        self.screen.get_height()/2 - start_button.get_height()/2))
-        
+        self.draw_text_to_center("Press (Space) to Start", font, self.WHITE)
+
+
     def draw_game_over(self):
-        self.screen.fill((0, 0, 0))
         font = pygame.font.SysFont('arial', 40)
-        end_text = font.render("Game Over", True, self.WHITE)
-        self.screen.blit(end_text, (self.screen.get_width()/2 - end_text.get_width()/2, 
-                                        self.screen.get_height()/2 - end_text.get_height()/2))
+        self.draw_text_to_center("Game Over", font, self.WHITE)
 
 
     def draw_next_level(self, level_no):
-        self.screen.fill((0, 0, 0))
         font = pygame.font.SysFont('arial', 40)
-        end_text = font.render(f"Level {level_no}", True, self.WHITE)
-        self.screen.blit(end_text, (self.screen.get_width()/2 - end_text.get_width()/2, 
-                                        self.screen.get_height()/2 - end_text.get_height()/2))
-        
+        self.draw_text_to_center(f"Level {level_no}", font, self.WHITE)
 
 
