@@ -20,7 +20,6 @@ class Level(object):
         self.player = player
         self.SCREEN_WIDTH = SCREEN_WIDTH
         self.SCREEN_HEIGHT = SCREEN_HEIGHT
-        print(f"SCREEN_WIDTH: {SCREEN_WIDTH}, SCREEN_HEIGHT: {SCREEN_HEIGHT}")
          
         # Background image
         self.background = None
@@ -29,7 +28,7 @@ class Level(object):
         self.WHITE = (255, 255, 255)
 
         # Set Gravity
-        self.gravity = 0.001
+        self.gravity = 0.03
 
         # Current lives of player
         self.font = pygame.font.Font(None, 36)
@@ -37,7 +36,8 @@ class Level(object):
         # Enemy update time. Reduce updater interval for faster enemies
         self.last_update_time = time.time()
         self.update_interval = 40
- 
+
+
     # Update everythign on this level
     def update(self):
         # Updare the lives counter on the screen
@@ -63,6 +63,8 @@ class Level(object):
             enemy.collider.check_collision_with_sprite(self.player, self.enemy_sprite_list)
             enemy.movement.apply_gravity(self.gravity)
             enemy.movement.update(enemy)
+            enemy.animation.animate_movement(enemy)
+
 
     def update_scores(self):
         text = self.font.render("Lives: " + str(self.player.lives.get_lives()), 1, self.WHITE)
@@ -78,13 +80,15 @@ class Level(object):
         screen.blit(scoreText, scoreTextpos)
         pygame.display.update(0, 810, self.SCREEN_WIDTH, 40)
 
+
     def update_enemies(self):
         current_time = time.time()
         if current_time - self.last_update_time >= self.update_interval / 1000:  # Convert milliseconds to seconds
             for enemy in self.enemy_sprite_list:
                 enemy.behavior.update(enemy, self.player)
             self.last_update_time = current_time        
- 
+
+
     def draw(self, screen):
         """ Draw everything on this level. """
  
@@ -96,8 +100,10 @@ class Level(object):
         self.all_sprite_list.draw(screen)
         self.enemy_sprite_list.draw(screen)
 
+
     def addEnemy(self, enemy):
         self.all_sprite_list.add(enemy)
+
 
     def getEnemyList(self):
         return self.enemy_sprite_list
@@ -107,13 +113,8 @@ class Level(object):
 Level 01 of the game. Defines the platorms for the Level
 """
 class Level_01(Level):
-    """ Definition for level 1. """
- 
     def __init__(self, player, SCREEN_WIDTH, SCREEN_HEIGHT):
-        """ Create level 1. """
- 
-        # Call the parent constructor
-        Level.__init__(self, player, SCREEN_WIDTH, SCREEN_HEIGHT)
+        super().__init__(player, SCREEN_WIDTH, SCREEN_HEIGHT)
  
         # List of platforms for the Level
         # Array with x, y, width, height
@@ -133,7 +134,77 @@ class Level_01(Level):
             self.platform_list.add(block)
 
         #Add enemies to the level
-        enemy0 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        enemy1 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        enemy0 = Enemy(SCREEN_WIDTH, SCREEN_HEIGHT/2)
+        enemy1 = Enemy(SCREEN_WIDTH, SCREEN_HEIGHT/2)
         self.enemy_sprite_list.add(enemy0)
         self.enemy_sprite_list.add(enemy1)
+
+
+"""
+Level 02 
+"""
+class Level_02(Level):
+    def __init__(self, player, SCREEN_WIDTH, SCREEN_HEIGHT):
+        super().__init__(player, SCREEN_WIDTH, SCREEN_HEIGHT)
+
+        level = [[800, 480, 200, 20],
+                 [0  , 480, 200, 20],
+                 [850, 300, 150, 20],
+                 [0  , 300, 150, 20],
+                 [400, 350, 200, 20],
+                 [600, 100, 200, 20],
+                 [200, 100, 200, 20],
+                 [0  , 750,1000, 20],
+                 ]
+        
+        # Go through the array above and add platforms
+        for platform in level:
+            block = Platform.Platform(platform[0], platform[1], platform[2], platform[3], self.GREEN)
+            self.platform_list.add(block)
+
+        #Add enemies to the level
+        enemy0 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        enemy1 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        enemy2 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        enemy3 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        self.enemy_sprite_list.add(enemy0)
+        self.enemy_sprite_list.add(enemy1)
+        self.enemy_sprite_list.add(enemy2)
+        self.enemy_sprite_list.add(enemy3)
+
+
+"""
+Level 03
+"""
+class Level_03(Level):
+    def __init__(self, player, SCREEN_WIDTH, SCREEN_HEIGHT):
+        super().__init__(player, SCREEN_WIDTH, SCREEN_HEIGHT)
+
+        level = [[800, 480, 200, 20],
+                 [0  , 480, 200, 20],
+                 [850, 300, 150, 20],
+                 [0  , 300, 150, 20],
+                 [400, 350, 200, 20],
+                 [600, 100, 200, 20],
+                 [200, 100, 200, 20],
+                 [0  , 750,1000, 20],
+                 ]
+        
+        # Go through the array above and add platforms
+        for platform in level:
+            block = Platform.Platform(platform[0], platform[1], platform[2], platform[3], self.GREEN)
+            self.platform_list.add(block)
+
+        #Add enemies to the level
+        enemy0 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        enemy1 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        enemy2 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        enemy3 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        enemy4 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        enemy5 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+        self.enemy_sprite_list.add(enemy0)
+        self.enemy_sprite_list.add(enemy1)
+        self.enemy_sprite_list.add(enemy2)
+        self.enemy_sprite_list.add(enemy3)
+        self.enemy_sprite_list.add(enemy4)
+        self.enemy_sprite_list.add(enemy5)

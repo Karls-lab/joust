@@ -26,12 +26,14 @@ if __name__ == "__main__":
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT + INFORMATION_BAR_HEIGHT])
     pygame.display.set_caption('LANCE CHAMPIONS')
 
-    # Create the player, x, y width, height
-    player = Player(50, 50)
+    # Create the player, x, y
+    player = Player(x=SCREEN_WIDTH/2, y=SCREEN_HEIGHT/4)
 
     # Create all the levels
     level_list = []
     level_list.append(Levels.Level_01(player, SCREEN_WIDTH, SCREEN_HEIGHT))
+    level_list.append(Levels.Level_02(player, SCREEN_WIDTH, SCREEN_HEIGHT))
+    level_list.append(Levels.Level_03(player, SCREEN_WIDTH, SCREEN_HEIGHT))
 
     # Set the current level
     current_level_no = 0
@@ -67,6 +69,14 @@ if __name__ == "__main__":
             keys = pygame.key.get_pressed()
             if keys[pygame.K_SPACE]:
                 done = True
+
+        if game_state == "next_level":
+            menu.draw_next_level(current_level_no + 2)
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_SPACE]:
+                current_level_no += 1
+                current_level = level_list[current_level_no]
+                game_state = "game"
         
         if game_state == "game":
             if pygame.time.get_ticks() - last_input_time > move_interval:
@@ -74,11 +84,14 @@ if __name__ == "__main__":
                 player.input.handle_input(keys, player) 
                 last_input_time = pygame.time.get_ticks()
 
-            current_level.update()
-            current_level.draw(screen)
-
             if player.lives.get_lives() == 0:
                 game_state = "game_over"
+            if len(current_level.getEnemyList()) == 0:
+                game_state = "next_level"
+
+
+            current_level.update()
+            current_level.draw(screen)
 
         pygame.display.update(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
         clock.tick(60)

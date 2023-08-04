@@ -17,10 +17,16 @@ class Menu():
         self.screen.fill((0, 0, 0))
         font = pygame.font.SysFont('arial', 40)
         end_text = font.render("Game Over", True, self.WHITE)
-        self.screen.blit(end_text, (self.screen.get_width()/2 - end_text.get_width()/2))
+        self.screen.blit(end_text, (self.screen.get_width()/2 - end_text.get_width()/2, 
+                                        self.screen.get_height()/2 - end_text.get_height()/2))
 
 
-
+    def draw_next_level(self, level_no):
+        self.screen.fill((0, 0, 0))
+        font = pygame.font.SysFont('arial', 40)
+        end_text = font.render(f"Level {level_no}", True, self.WHITE)
+        self.screen.blit(end_text, (self.screen.get_width()/2 - end_text.get_width()/2, 
+                                        self.screen.get_height()/2 - end_text.get_height()/2))
         
 
 

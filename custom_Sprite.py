@@ -98,11 +98,22 @@ class MovementComponent:
     def __init__(self):
         self.x_velocity = 0
         self.y_velocity = 0
+        self.max_velocity = 8
 
     def update_velocity(self, sprite, x, y):
-        #self.apply_wind_resistance(.01)
         self.x_velocity += x
         self.y_velocity += y
+
+        # Limit velocity
+        if self.x_velocity > 0:
+            self.x_velocity = min(self.x_velocity, self.max_velocity)
+        elif self.x_velocity < 0:
+            self.x_velocity = max(self.x_velocity, -self.max_velocity)
+        elif self.y_velocity > 0:
+            self.y_velocity = min(self.y_velocity, self.max_velocity)
+        elif self.y_velocity < 0:
+            self.y_velocity = max(self.y_velocity, -self.max_velocity)
+
 
     def update(self, sprite):
         sprite.rect.x += self.x_velocity
