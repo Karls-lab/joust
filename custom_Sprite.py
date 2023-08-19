@@ -1,9 +1,11 @@
 import pygame
 
+
 class custom_Sprite(pygame.sprite.Sprite):
-    # Constructor function
+    """The Custom Sprite is Inherited by the player and the Enemy
+       Handles basic sprite properties like width and height, 
+       and also collider logic and movement control."""
     def __init__(self, x, y):
-        # Call the parent's constructor
         super().__init__()
         self.WHITE = (255, 255, 255)
         self.collider = ColliderComponent()
@@ -95,6 +97,8 @@ class ColliderComponent:
 
 
 class MovementComponent:
+    """Handles the Movement and velocity. Keepes a minimum velocity so 
+       Players and enemies won't go flying off into infinity."""
     def __init__(self):
         self.x_velocity = 0
         self.y_velocity = 0
@@ -130,13 +134,6 @@ class MovementComponent:
 
     def stop_x(self):
         self.x_velocity = 0
-
-    def apply_wind_resistance(self, x):
-        # if self.x_velocity > 0:
-        #     self.x_velocity -= x
-        # elif self.x_velocity < 0:
-        #     self.x_velocity += x
-        pass
-   
+ 
     def apply_gravity(self, y):
         self.y_velocity += y

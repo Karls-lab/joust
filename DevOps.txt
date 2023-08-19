@@ -1,5 +1,8 @@
 Current DevOps:
 
+
+Movement: 
+
 Enemies: 
    Enemies are working pretty well! I'm happy with the progress I've made 
 
@@ -8,13 +11,8 @@ Collision:
 
 
 Main Menu:
-   All the display text will be reneder withing the menu class, but 
-   I should rename it to something more fitting
-
-   The score method should be moved to the display class. 
-
-   I should create a file for highscores, make it secure 
-   and tamper proof.  
+   Create a Highscore Screen. Display After Game over. 
+   Add option to add name to highscore if reached. 
 
 
 Assets:

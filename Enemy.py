@@ -32,7 +32,7 @@ class behaviorComponent:
         # The move variable determiens how fase the enemy moves 
         move = .5
 
-        random_choice = random.randint(1, 12)
+        random_choice = random.randint(1, 8)
         # update velocity (enemy, x, y)
         if random_choice == 1:
             enemy.movement.update_velocity(enemy, x=move, y=0)
@@ -43,7 +43,7 @@ class behaviorComponent:
         elif random_choice == 4:
             enemy.movement.update_velocity(enemy, x=0, y=move)
         elif random_choice == 5:
-            enemy.movement.update_velocity(enemy, x=0, y=-move*2)
+            enemy.movement.update_velocity(enemy, x=0, y=-move * 1.5)
         elif random_choice == 6:
             enemy.movement.update_velocity(enemy, x=0, y=0)
         # Else, move to player's position

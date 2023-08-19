@@ -1,9 +1,8 @@
 import pygame
 import Platform
-import Player
 from Enemy import Enemy
-import multiprocessing as mp
 import time
+import random
 
 class Level(object):
     """ 
@@ -125,8 +124,7 @@ class Level_01(Level):
                  [400, 350, 200, 20],
                  [600, 100, 200, 20],
                  [200, 100, 200, 20],
-                 [0  , 750,1000, 20],
-                 ]
+                 [0  , 750,1000, 20]]
  
         # Go through the array above and add platforms
         for platform in level:
@@ -140,71 +138,36 @@ class Level_01(Level):
         self.enemy_sprite_list.add(enemy1)
 
 
-"""
-Level 02 
-"""
-class Level_02(Level):
+class Level_Generator(Level):
     def __init__(self, player, SCREEN_WIDTH, SCREEN_HEIGHT):
         super().__init__(player, SCREEN_WIDTH, SCREEN_HEIGHT)
 
-        level = [[800, 480, 200, 20],
-                 [0  , 480, 200, 20],
-                 [850, 300, 150, 20],
-                 [0  , 300, 150, 20],
-                 [400, 350, 200, 20],
-                 [600, 100, 200, 20],
-                 [200, 100, 200, 20],
-                 [0  , 750,1000, 20],
-                 ]
         
-        # Go through the array above and add platforms
-        for platform in level:
-            block = Platform.Platform(platform[0], platform[1], platform[2], platform[3], self.GREEN)
-            self.platform_list.add(block)
+    def generate_random_level(self, level_no):
+        random_widths = random.sample(range(100, 250, 10), 8)
+        # Array to store level platforms [x, y, width, height]
+        level = [[800, 480, random_widths[0], 20],
+                [0  , 480, random_widths[1], 20], 
+                [850, 300, random_widths[2], 20],
+                [0  , 300, random_widths[3], 20], 
+                [400, 350, random_widths[4], 20],
+                [600, 100, random_widths[5], 20],
+                [200, 100, random_widths[6], 20],
+                [0  , 750, random_widths[7], 20]]
+        # Create platorms with level array
+        for platform_coords in level:
+            platform = Platform.Platform(
+                platform_coords[0], 
+                platform_coords[1], 
+                platform_coords[2], 
+                platform_coords[3], 
+                self.GREEN)
+            self.platform_list.add(platform)
 
-        #Add enemies to the level
-        enemy0 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        enemy1 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        enemy2 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        enemy3 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        self.enemy_sprite_list.add(enemy0)
-        self.enemy_sprite_list.add(enemy1)
-        self.enemy_sprite_list.add(enemy2)
-        self.enemy_sprite_list.add(enemy3)
-
-
-"""
-Level 03
-"""
-class Level_03(Level):
-    def __init__(self, player, SCREEN_WIDTH, SCREEN_HEIGHT):
-        super().__init__(player, SCREEN_WIDTH, SCREEN_HEIGHT)
-
-        level = [[800, 480, 200, 20],
-                 [0  , 480, 200, 20],
-                 [850, 300, 150, 20],
-                 [0  , 300, 150, 20],
-                 [400, 350, 200, 20],
-                 [600, 100, 200, 20],
-                 [200, 100, 200, 20],
-                 [0  , 750,1000, 20],
-                 ]
+        # Add enemies to the level
+        if level_no == 0 : level_no += 1
+        num_enemies = ((level_no) * 3) // 2
+        for i in range(num_enemies):
+            enemy = Enemy(random.randint(0, self.SCREEN_WIDTH), self.SCREEN_HEIGHT/2)
+            self.enemy_sprite_list.add(enemy)
         
-        # Go through the array above and add platforms
-        for platform in level:
-            block = Platform.Platform(platform[0], platform[1], platform[2], platform[3], self.GREEN)
-            self.platform_list.add(block)
-
-        #Add enemies to the level
-        enemy0 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        enemy1 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        enemy2 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        enemy3 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        enemy4 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        enemy5 = Enemy(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
-        self.enemy_sprite_list.add(enemy0)
-        self.enemy_sprite_list.add(enemy1)
-        self.enemy_sprite_list.add(enemy2)
-        self.enemy_sprite_list.add(enemy3)
-        self.enemy_sprite_list.add(enemy4)
-        self.enemy_sprite_list.add(enemy5)

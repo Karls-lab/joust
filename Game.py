@@ -7,7 +7,8 @@ Version: Alpha 2.0
 import pygame
 from Player import Player 
 import Levels 
-from Menu import Menu
+from Display import Menu
+from Display import HighScore
 
 if __name__ == "__main__":
     # Colors
@@ -21,7 +22,7 @@ if __name__ == "__main__":
     SCREEN_HEIGHT = 800
     INFORMATION_BAR_HEIGHT = 100
 
-    # Initialized Pygame
+    # Initialize Pygame
     pygame.init()
     screen = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT + INFORMATION_BAR_HEIGHT])
     pygame.display.set_caption('LANCE CHAMPIONS')
@@ -29,15 +30,9 @@ if __name__ == "__main__":
     # Create the player, x, y
     player = Player(x=SCREEN_WIDTH/2, y=SCREEN_HEIGHT/4)
 
-    # Create all the levels
-    level_list = []
-    level_list.append(Levels.Level_01(player, SCREEN_WIDTH, SCREEN_HEIGHT))
-    level_list.append(Levels.Level_02(player, SCREEN_WIDTH, SCREEN_HEIGHT))
-    level_list.append(Levels.Level_03(player, SCREEN_WIDTH, SCREEN_HEIGHT))
-
-    # Set the current level
+    # Create the level generator
+    current_level = Levels.Level_Generator(player, SCREEN_WIDTH, SCREEN_HEIGHT)
     current_level_no = 0
-    current_level = level_list[current_level_no]
 
     # Set the Clock
     clock = pygame.time.Clock()
@@ -61,21 +56,31 @@ if __name__ == "__main__":
         if game_state == "start_menu":
             menu.draw_menu()
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_SPACE]:
+            if keys[pygame.K_RETURN]:
                 game_state = "game"
 
         if game_state == "game_over":
             menu.draw_game_over()
             keys = pygame.key.get_pressed()
             if keys[pygame.K_SPACE]:
-                done = True
+                game_state = "high_scores"
+
+        # if game_state == "high_scores":
+        #     # Create a singleton here, and refresh every tick?
+        #     high_scores = HighScore(screen)
+        #     high_scores.draw_high_scores()
+        #     if high_scores.is_high_score(player.score.get_score()):
+        #         high_scores.input_score(player.score.get_score())   
+        #     keys = pygame.key.get_pressed()
+        #     if keys[pygame.K_SPACE]:
+        #         game_state = "start_menu"
 
         if game_state == "next_level":
-            menu.draw_next_level(current_level_no + 2)
+            menu.draw_next_level(current_level_no)
             keys = pygame.key.get_pressed()
-            if keys[pygame.K_SPACE]:
-                current_level_no += 1
-                current_level = level_list[current_level_no]
+            if keys[pygame.K_RETURN]:
+                current_level_no += 1 
+                current_level.generate_random_level(current_level_no)
                 game_state = "game"
         
         if game_state == "game":
@@ -89,7 +94,7 @@ if __name__ == "__main__":
             if len(current_level.getEnemyList()) == 0:
                 game_state = "next_level"
 
-
+            # Update the level each tick 
             current_level.update()
             current_level.draw(screen)
 

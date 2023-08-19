@@ -3,6 +3,7 @@ import pygame
 
 """ Player Class that inherits from custom_Sprite """
 class Player(custom_Sprite):
+    """Manages player animation, and other essential components need for the player"""
     def __init__(self, x, y):
  
         super().__init__(x, y)
@@ -11,6 +12,7 @@ class Player(custom_Sprite):
         self.score = ScoreComponent()
         self.image = pygame.image.load("assets/player_assets/player_flying_right.png")
 
+    """Player animate functions, update the self.image"""
     def animate_right(self):
         self.image = pygame.image.load("assets/player_assets/player_flying_right.png")
 
@@ -25,25 +27,24 @@ class Player(custom_Sprite):
 
 
 class InputComponent:
+    """Handles player input and animation orientation"""
     def __init__(self):
         self.last_input_time = 0
-        self.animation_interval = 50 # milliseconds 
-        self.last_key = None
         self.orientation = 'right'
         self.flap = 1
 
+
     def handle_input(self, key, player):
+        """handles the player input a(left), d(right), and space(jump)"""
         if key[pygame.K_a]:
             player.movement.update_velocity(player, -1, 0)
             player.animate_left()
-            self.last_key = 'a'
             self.orientation = 'left'
         elif key[pygame.K_d]:
             player.movement.update_velocity(player, 1, 0)
             player.animate_right()
             self.orientation = 'right'
-            self.last_key = 'd'
-        elif key[pygame.K_w]:
+        elif key[pygame.K_SPACE]:
             player.movement.update_velocity(player, 0, -1)
             self.flap += 1
             if (self.flap % 2 == 0) and self.orientation == 'left':
@@ -54,14 +55,6 @@ class InputComponent:
                 player.animate_flap_left()
             elif self.orientation == 'right':
                 player.animate_flap_right()
-            self.last_key = 'w' 
-        elif key[pygame.K_s]:
-            player.movement.update_velocity(player, 0, 1)
-            if self.orientation == 'left':
-                player.animate_left()
-            elif self.orientation == 'right':
-                player.animate_right()
-            self.last_key = 's'
 
 
 class ScoreComponent:
@@ -80,6 +73,7 @@ class ScoreComponent:
 
 
 class LifeComponent:
+    """Handles the lives of the Player"""
     def __init__(self):
         self.lives = 3
 
